@@ -104,3 +104,13 @@ path("<path_name>/", view_name )
    return HttpResponse(")
 
 ---
+
+Bootstrap && CSS
+
+1. Creamos adentro de la carpeta de la app una carpeta static
+
+2. Vamos a https://startbootstrap.com/
+
+3 Descargamos un template
+
+4. Descomprimimos el archivo
