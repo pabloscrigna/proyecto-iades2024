@@ -7,8 +7,25 @@
 </head>
 <body>
     <a>Listado de Cursos</a>
+    <br>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>nombre</th>
+                <th>codigo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for curso in cursos_list  %}
+            <tr>
+                <td>{{ curso.id }}</td>
+                <td>{{ curso.nombre }}</td>
+                <td>{{ curso.codigo }}</td>
+            </tr>
+            {% endfor %}
 
-    <h1>{{ id }} -- {{ nombre }} -- {{ alumnos }}</h1>
+
 
 </body>
 </html>
