@@ -12,23 +12,43 @@ def inicio(request):
 
 def cursos(request):
 
+    print(f"metodo: {request.method}")
+
+    # Crea un curso por unica vez
+    # nombre --> str y codigo --> int
+
+    # curso_new = Cursos(nombre="tiene 5 para pensar", codigo=34125)
+    # print(curso_new)
+
+    # curso_new.save()
+
+    # print(f"id= {curso_new.id}")
+
     # Leer todos los objetos de una tabla
     cursos = Cursos.objects.all()    # select * from Cursos
+    print(cursos)
 
     # Comandos del ORM
     # Filtrar por un campo
-    cursos = Cursos.objects.filter(nombre="HTML")
-
-    print(f"Curso filtrado: {cursos}")
+    cursos_html = Cursos.objects.filter()
+    cursos_html = cursos_html.first()
+    print(f"Curso filtrado: {cursos_html}")
 
     # Obtener un objeto unico -- un solo objeto
-    cursos = Cursos.objects.get(id=2)
+    #cursos_id = Cursos.objects.get(id=6)
+    #print(type(cursos_id))
+    #print(f"Objeto unico: id: {cursos_id.id} -- nombre: {cursos_id.nombre}")
 
-    print(f"Objeto unico {cursos.id}  {cursos.nombre}")
+    #cursos_id.nombre = "Rust"
+    #cursos_id.save()
 
     context_cursos = {
-        "cursos_list": cursos
+        "cursos_list": cursos,
+        #"curso_id": cursos_id   # id = 6 nombre Rust codigo 45634
     }
+
+    # elimina un curso 
+    # cursos_id.delete()    # Borra de la base y el el id de la variable = None nombre = Rust codigo 45634
 
     return render(request, "cursos.html", context_cursos)
 
