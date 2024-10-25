@@ -12,7 +12,7 @@ def inicio(request):
 
 def cursos(request):
 
-    print(f"metodo: {request.method}")
+    print(f"metodo: {request.method}")  # GET    # POST - GET - PUT - PATCH 
 
     # Crea un curso por unica vez
     # nombre --> str y codigo --> int
@@ -68,3 +68,13 @@ def estudiantes(request):
 def profesores(request):
 
     return HttpResponse("vista de profesores")
+
+
+def formulario_curso(request):
+
+    if request.method == "POST":
+
+        print(f"nombre: {request.POST['nombre']}")
+
+
+    return render(request, "formulario_curso.html")
