@@ -3,7 +3,7 @@ from django.http import HttpResponse
 
 # Create your views here.
 from iades.models import Cursos, Estudiantes
-
+from iades.forms import FormularioCurso
 
 def inicio(request):
 
@@ -67,14 +67,30 @@ def estudiantes(request):
 
 def profesores(request):
 
-    return HttpResponse("vista de profesores")
+    return render(request, "profesores.html")
+    #return HttpResponse("vista de profesores")
 
 
 def formulario_curso(request):
 
     if request.method == "POST":
 
-        print(f"nombre: {request.POST['nombre']}")
+        formulario = FormularioCurso(request.POST)
 
+        print("formulario")
+        print(formulario)
+
+        print(f" validadcion: {formulario.is_valid()}")
+
+        if formulario.is_valid():
+            datos = formulario.cleaned_data
+            print(f"datos: {datos}")
+            curso_new = Cursos(nombre=datos["nombre"], codigo=datos["codigo"])
+            curso_new.save()
+
+        else:
+            print(f"errores: {formulario.errors}")
+
+        return render(request, "index.html")
 
     return render(request, "formulario_curso.html")
