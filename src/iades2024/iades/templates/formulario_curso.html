@@ -6,10 +6,15 @@
     <title>Document</title>
 </head>
 <body>
+    {% if formulario.errors %}
+        <p style="color: red;">Estan mal los datos!!! </p>
+    {% endif %}
     <form action="/instituto/curso-nuevo/" method="POST">{% csrf_token %}
-        <p> Nombre: <input type="text" name="nombre"></p>
-        <p> Codigo: <input type="text" name="codigo"></p>
 
+        <table>
+            {{ formulario.as_table }}
+        </table>
+        
         <input type="submit" value="Enviar">
     </form>
 </body>

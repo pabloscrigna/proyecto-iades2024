@@ -1,9 +1,10 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.http import HttpResponse, HttpResponseRedirect
 
 # Create your views here.
-from iades.models import Cursos, Estudiantes
+from iades.models import Curso, Estudiante
 from iades.forms import FormularioCurso
+
 
 def inicio(request):
 
@@ -25,12 +26,12 @@ def cursos(request):
     # print(f"id= {curso_new.id}")
 
     # Leer todos los objetos de una tabla
-    cursos = Cursos.objects.all()    # select * from Cursos
+    cursos = Curso.objects.all()    # select * from Cursos
     print(cursos)
 
     # Comandos del ORM
     # Filtrar por un campo
-    cursos_html = Cursos.objects.filter()
+    cursos_html = Curso.objects.filter()
     cursos_html = cursos_html.first()
     print(f"Curso filtrado: {cursos_html}")
 
@@ -56,9 +57,9 @@ def cursos(request):
 def estudiantes(request):
 
     # Trae todos los registros de la tabla estudiantes
-    estudiantes = Estudiantes.objects.all()
+    estudiantes = Estudiante.objects.all()
 
-    estudiantes = Estudiantes.objects.filter(dni=342422456)
+    estudiantes = Estudiante.objects.filter(dni=342422456)
 
     print(estudiantes)
 
@@ -85,12 +86,17 @@ def formulario_curso(request):
         if formulario.is_valid():
             datos = formulario.cleaned_data
             print(f"datos: {datos}")
-            curso_new = Cursos(nombre=datos["nombre"], codigo=datos["codigo"])
+            curso_new = Curso(nombre=datos["nombre"], codigo=datos["codigo"])
             curso_new.save()
-
+            return HttpResponseRedirect("/instituto/")
+        
         else:
-            print(f"errores: {formulario.errors}")
-
-        return render(request, "index.html")
-
-    return render(request, "formulario_curso.html")
+            # print(f"errores: {formulario.errors}")
+            print(f"errores json: {formulario.errors.as_json}")
+            print(f"errores data: {formulario.errors.as_data}")
+            print(f"errores text: {formulario.errors.as_text}")
+            return render(request, "formulario_curso.html", {"formulario": formulario})
+        
+    formulario = FormularioCurso({"nombre": "SCRUM", "codigo": 4})
+    return render(request, "formulario_curso.html", {"formulario": formulario})
+    # return render(request, "formulario_curso.html")
