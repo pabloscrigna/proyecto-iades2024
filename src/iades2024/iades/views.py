@@ -3,8 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 # Create your views here.
 from iades.models import Curso, Estudiante
-from iades.forms import FormularioCurso
-
+from iades.forms import FormularioCurso, FormularioBusquedaCurso
 
 def inicio(request):
 
@@ -100,3 +99,23 @@ def formulario_curso(request):
     formulario = FormularioCurso({"nombre": "SCRUM", "codigo": 4})
     return render(request, "formulario_curso.html", {"formulario": formulario})
     # return render(request, "formulario_curso.html")
+
+
+def buscar_curso(request):
+
+    formulario = FormularioBusquedaCurso()
+
+    return render(request, "buscar_curso.html", {"formulario": formulario})
+
+
+def buscar_nombre_curso(request):
+
+    parametros_url_nombre = request.GET["nombre"]
+
+    print(f"url parametros: {parametros_url_nombre}")
+
+    curso_nombre = Curso.objects.filter(nombre=parametros_url_nombre)
+
+    print(curso_nombre)
+
+    return render(request, "listado_busqueda_cursos.html", {"cursos" : curso_nombre, "nombre" : parametros_url_nombre})
