@@ -114,8 +114,9 @@ def buscar_nombre_curso(request):
 
     print(f"url parametros: {parametros_url_nombre}")
 
-    curso_nombre = Curso.objects.filter(nombre=parametros_url_nombre)
+    # curso_nombre = Curso.objects.filter(nombre=parametros_url_nombre)
+    curso_nombre = Curso.objects.filter(nombre__icontains=parametros_url_nombre)
 
     print(curso_nombre)
 
-    return render(request, "listado_busqueda_cursos.html", {"cursos" : curso_nombre, "nombre" : parametros_url_nombre})
+    return render(request, "listado_busqueda_cursos.html", {"id": "pirulo", "cursos" : curso_nombre, "nombre" : parametros_url_nombre})

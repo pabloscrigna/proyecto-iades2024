@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cursos Encontrados</title>
+    <title>Cursos Encontrados para {{ id }}</title>
 </head>
 <body>
    
@@ -12,10 +12,11 @@
         {% for curso in cursos %}
         <li>{{ curso.nombre }}</li>
         <li>{{ curso.codigo }}</li>
+        <li>{{ curso.cantidad }}</li>
         {% endfor %}
     </ul>
     {% else %}
-        <p>"No se encontraron cursos de {{ nombre }}</p>
+        <p style="color: green;">No se encontraron cursos de {{ nombre }}</p>
     {% endif %}
 
 </body>
