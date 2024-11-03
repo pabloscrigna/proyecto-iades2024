@@ -6,6 +6,14 @@
     <title>Vista de profesores</title>
 </head>
 <body>
-    <p>Vista de profesores</p>
+    <p>Alta de profesores</p>
+
+    <form action="/instituto/profesores/" method="POST">{% csrf_token %}
+ 
+        <table>
+            {{ profesor.as_table }}
+        </table>
+        <input type="submit" value="Crear">
+    </form>
 </body>
 </html>
