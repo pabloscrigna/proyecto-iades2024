@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listar Profesores</title>
+</head>
+<body>
+
+    {% for p in profesores %}
+        <li>{{p.nombre}} -- {{p.dni}}</li>
+        <button>
+            <a href="{% url 'EliminarProfesor' p.id %}">Eliminar</a>
+        </button>
+    {% endfor %}
+    <br>
+    <a href="/instituto/profesores">Alta nuevo profesor</a>
+
+    <br>
+    <p>la cantidad de profesores es: {{ cantidad }}</p>
+
+</body>
+</html>

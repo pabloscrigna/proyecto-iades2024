@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 
 # Create your views here.
-from iades.models import Curso, Estudiante
-from iades.forms import FormularioCurso, FormularioBusquedaCurso
+from iades.models import Curso, Estudiante, Profesor
+from iades.forms import FormularioCurso, FormularioBusquedaCurso, FormularioProfesor
 
 def inicio(request):
 
@@ -67,7 +67,23 @@ def estudiantes(request):
 
 def profesores(request):
 
-    return render(request, "profesores.html")
+    # vamos a dar de alta un profesor en esta vista
+    if request.method == "POST":
+        
+        profesor_form = FormularioProfesor(request.POST)
+
+        if profesor_form.is_valid():
+
+            datos_profesor = profesor_form.cleaned_data
+
+            profesor_new = Profesor(**datos_profesor)
+
+            profesor_new.save()
+
+            return render(request, "index.html")
+
+    profesor_form = FormularioProfesor()
+    return render(request, "profesores.html", {"profesor": profesor_form})
     #return HttpResponse("vista de profesores")
 
 
@@ -120,3 +136,22 @@ def buscar_nombre_curso(request):
     print(curso_nombre)
 
     return render(request, "listado_busqueda_cursos.html", {"id": "pirulo", "cursos" : curso_nombre, "nombre" : parametros_url_nombre})
+
+
+def listar_profesores(request):
+
+    profesores = Profesor.objects.all()
+
+    # TODO contar cantidad 
+    cantidad = Profesor.objects.count()
+
+    context_profesores = { "profesores": profesores, "cantidad": cantidad}
+
+    return render(request, 'listar_profesores.html', context_profesores)
+
+
+def eliminar_profesor(request, prof_dni):
+
+    print(prof_dni)
+
+    return HttpResponse("Vista en construccion")

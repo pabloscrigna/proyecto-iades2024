@@ -7,6 +7,8 @@ from .views import (cursos,
                     formulario_curso,
                     buscar_curso,
                     buscar_nombre_curso,
+                    listar_profesores,
+                    eliminar_profesor
 )
 
 
@@ -18,4 +20,6 @@ urlpatterns = [
     path('curso-nuevo/', formulario_curso, name="FormularioCurso"),
     path('buscar-curso/', buscar_curso, name="BuscarCurso"),
     path('buscar-nombre-curso', buscar_nombre_curso, name="BuscarNombreCurso"),
+    path('listar-profesores/', listar_profesores, name="listarProfesores"),
+    path('eliminar-profesor/<prof_dni>/', eliminar_profesor, name="EliminarProfesor")
 ]
