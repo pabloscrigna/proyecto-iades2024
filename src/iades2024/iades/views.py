@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import login, authenticate
+
 # Create your views here.
 from iades.models import Curso, Estudiante, Profesor
 from iades.forms import FormularioCurso, FormularioBusquedaCurso, FormularioProfesor
@@ -155,3 +158,49 @@ def eliminar_profesor(request, prof_dni):
     print(prof_dni)
 
     return HttpResponse("Vista en construccion")
+
+
+def iniciar_sesion(request):
+
+    if request.method == "POST":
+        
+        formulario = AuthenticationForm(request, data=request.POST)
+        print(f"formulario: {formulario}")
+        if formulario.is_valid():
+
+            print("Form is valid")
+
+            usuario = formulario.cleaned_data.get("username")
+            password = formulario.cleaned_data.get("password")
+
+            user = authenticate(username=usuario, password=password)
+
+            print(f"user: {user}")
+
+            if user is not None:
+
+                login(request, user)
+
+                print(f"Bienvenido: {usuario}")
+
+                return render(request, "index.html")    
+            
+        else:
+            print("Error")
+            print(f"errores: {formulario.errors}")
+
+    formulario = AuthenticationForm()
+
+    return render(request, 'login.html', {"form": formulario})
+
+""""
+def registracion(request):
+
+    if request.methos == "POST":
+
+        # Registramos el usuario
+
+    
+    formulario = 
+
+"""

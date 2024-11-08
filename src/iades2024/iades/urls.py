@@ -8,7 +8,8 @@ from .views import (cursos,
                     buscar_curso,
                     buscar_nombre_curso,
                     listar_profesores,
-                    eliminar_profesor
+                    eliminar_profesor,
+                    iniciar_sesion,
 )
 
 
@@ -21,5 +22,6 @@ urlpatterns = [
     path('buscar-curso/', buscar_curso, name="BuscarCurso"),
     path('buscar-nombre-curso', buscar_nombre_curso, name="BuscarNombreCurso"),
     path('listar-profesores/', listar_profesores, name="listarProfesores"),
-    path('eliminar-profesor/<prof_dni>/', eliminar_profesor, name="EliminarProfesor")
+    path('eliminar-profesor/<prof_dni>/', eliminar_profesor, name="EliminarProfesor"),
+    path('login/', iniciar_sesion, name="Login")
 ]
