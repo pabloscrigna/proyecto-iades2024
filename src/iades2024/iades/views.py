@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, authenticate
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 from iades.models import Curso, Estudiante, Profesor
@@ -68,6 +69,7 @@ def estudiantes(request):
     return HttpResponse("vista de estudiantes")
 
 
+@login_required
 def profesores(request):
 
     # vamos a dar de alta un profesor en esta vista
@@ -193,14 +195,24 @@ def iniciar_sesion(request):
 
     return render(request, 'login.html', {"form": formulario})
 
-""""
+
 def registracion(request):
 
-    if request.methos == "POST":
+    if request.method == "POST":
 
-        # Registramos el usuario
+        form = UserCreationForm(request.POST)
 
-    
-    formulario = 
+        if form.is_valid():
 
-"""
+            user = form.cleaned_data["username"]  
+            print(f"usuario: {user} creado")
+            form.save()
+
+            return render(request, "index.html")
+ 
+        else:
+            print("Formulario invalido")
+
+    formulario = UserCreationForm()
+
+    return render(request, "registro.html", {"form": formulario})
